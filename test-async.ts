@@ -1,15 +1,15 @@
-let util = {};
+let util: any = {};
 
-function fn(p) {
-	return new Promise((resolve, reject) => {
-		setTimeout(function () {
-			reject('testReject');
-			// util.notExistFn();
-		}, 1000);
-
-		// util.notExistFn();
-	})
-}
+		function fn(p) {
+			return new Promise((resolve, reject) => {
+				setTimeout(function () {
+					util.notExistFn(); // 不会自动reject, 会引发fatalException
+					reject('testReject');
+				}, 1000);
+				
+				util.notExistFn(); // 可以自动reject
+			})
+		}
 
 (async function () {
 	try {
