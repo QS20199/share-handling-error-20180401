@@ -9,10 +9,4 @@
 		// "lib": ["dom", "es6"],
 		"outDir": "./dist/"
 	}
-	//"include":[
-	//     "ts"
-	// ],
-	//"exclude": [
-	//     "js"
-	// ]
 }

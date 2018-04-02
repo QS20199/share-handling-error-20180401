@@ -1,12 +1,14 @@
 import * as domain from 'domain';
 import * as events from 'events';
+import { EventEmitter } from 'events';
 let oneEventEmmitter = new events.EventEmitter();
 let oneDomain = domain.create();
-// oneDomain.add(oneEventEmmitter);
+oneDomain.add(oneEventEmmitter);
 oneDomain.on('error', function (err) {
 	console.info('error catch by domain.onError, error:', err.message);
 });
 
+// setTimeout(function () { oneEventEmmitter.emit('data', {}) }, 1000);
 oneDomain.run(function () {
 	// 由nextTick抛出的异步错误
 	process.nextTick(() => {
@@ -19,12 +21,11 @@ oneDomain.run(function () {
 	}, 0);
 
 	// 由EventEmitter抛出的异步错误
-	oneEventEmmitter.addListener('data', (data) => {
-		throw new Error('async err by EventEmitter');
-	})
-
+	// oneEventEmmitter.addListener('data', (data) => {
+	// 	throw new Error('async err by EventEmitter');
+	// })
+	
 	// 直接抛出的错误
 	throw new Error('sync err in d.run');
 });
 
-setTimeout(function () { oneEventEmmitter.emit('data', {}) }, 1000);
