@@ -19,14 +19,3 @@ function fn(p) {
 })();
 
 setInterval(() => { }, 10000);
-
-let events = require("events");
-//创建一个事件监听对象
-let emitter = new events.EventEmitter();
-//监听error事件
-emitter.addListener("error", function (e) {
-    /*处理异常*/
-    console.log(e.message)
-});
-//触发error事件
-emitter.emit("error", new Error('出错啦'));

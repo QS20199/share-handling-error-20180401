@@ -4,5 +4,5 @@ window.addEventListener('error', function (event) {
 
 var el = document.createElement('script');
 el.src = 'http://127.0.0.1:8887/test-browser.js';
-el.crossOrigin = true;
+// el.crossOrigin = true;
 document.body.appendChild(el);
