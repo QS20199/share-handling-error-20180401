@@ -1,10 +1,13 @@
+let util = {};
+
 function fn(p) {
 	return new Promise((resolve, reject) => {
 		setTimeout(function () {
-			// reject('testReject');
-			// throw new Error('testError');
+			reject('testReject');
+			// util.notExistFn();
 		}, 1000);
-		throw new Error('testError');
+
+		// util.notExistFn();
 	})
 }
 
@@ -13,6 +16,6 @@ function fn(p) {
 		await fn(11233);
 		console.log('ok');
 	} catch (e) {
-		console.error('catch error:', e);
+		console.info('catch error:', e);
 	}
 })();
