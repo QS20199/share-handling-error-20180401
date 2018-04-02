@@ -25,6 +25,13 @@
 			"name": "run test-stack",
 			"program": "${workspaceFolder}/dist/test-stack.js",
 			"sourceMaps": true
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "run test-koa",
+			"program": "${workspaceFolder}/dist/test-koa.js",
+			"sourceMaps": true
 		}
 	]
 }

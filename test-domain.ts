@@ -1,32 +1,30 @@
 import * as domain from 'domain';
 import * as events from 'events';
-let d = domain.create();
-d.on('error', function (err) {
-	console.error('error catch by domain.onError, error:', err.stack);
-	// d.dispose();
+let oneEventEmmitter = new events.EventEmitter();
+let oneDomain = domain.create();
+// oneDomain.add(oneEventEmmitter);
+oneDomain.on('error', function (err) {
+	console.info('error catch by domain.onError, error:', err.message);
 });
 
-let e = new events.EventEmitter();
-d.run(function () {
-	// throw new Error('err in d.run');
-	
-	process.nextTick(function () {
-	 throw new Error('async err by nextTick');
+oneDomain.run(function () {
+	// 由nextTick抛出的异步错误
+	process.nextTick(() => {
+		throw new Error('async err by nextTick');
 	})
 
-	// setTimeout(function () {
-	// 	throw new Error('async err by timer');
-	// }, 1000);
+	// 由timer抛出的异步错误
+	setTimeout(() => {
+		throw new Error('async err by timer');
+	}, 0);
 
-	// d.add(e);
-	// e.on('testEvent', function (e) {
-	// 	console.log('testEvent received');
-	// 	throw new Error('err in testEvent');
-	// })
+	// 由EventEmitter抛出的异步错误
+	oneEventEmmitter.addListener('data', (data) => {
+		throw new Error('async err by EventEmitter');
+	})
+
+	// 直接抛出的错误
+	throw new Error('sync err in d.run');
 });
 
-e.emit('testEvent')
-
-// setInterval(() => {
-// 	//...
-// }, 1000);
+setTimeout(function () { oneEventEmmitter.emit('data', {}) }, 1000);
